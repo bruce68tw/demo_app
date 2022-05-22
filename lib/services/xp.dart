@@ -37,16 +37,18 @@ class Xp {
   static initDb() {
     DbUt.init('Demo.db', 1, ['''
 Create Table user(
-  sn Integer Primary Key AutoIncrement not null,
-  account Text Unique,
+  sn Integer Primary Key AutoIncrement,
+  account Text Unique not null,
   name Text not null,
   dept_sn Integer,
   email Text,
+  birth Text,
+  status Integer not null,
   created TimeStamp Default Current_TimeStamp,
   note Text)
 ''','''
 Create Table dept(
-  sn Integer Primary Key AutoIncrement not null,
+  sn Integer Primary Key AutoIncrement,
   name Text not null)
 ''']);
   }
