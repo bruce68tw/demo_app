@@ -1,0 +1,116 @@
+import 'package:base_lib/all.dart';
+import 'package:flutter/material.dart';
+import 'all_com.dart';
+import 'tables/all.dart';
+
+class UserEdit extends StatefulWidget {
+  const UserEdit({Key? key, this.sn, required this.depts }) 
+    : super(key: key);
+  final int? sn;
+  final List<IdStrDto> depts;
+
+  @override
+  _UserEditState createState() => _UserEditState();
+}
+
+class _UserEditState extends State<UserEdit> {  
+  bool _isOk = false;
+  late bool _isNew;     //新增
+  late UserTab _row;
+
+  //input fields & variables
+  final _deptSn = 0;
+  //late List<IdStrDto>_depts;
+  final _formKey = GlobalKey<FormState>();
+  final accountCtrl = TextEditingController();
+  final nameCtrl = TextEditingController();
+
+  //List<IdStrDto> _closeDetails = [];  //filtered by XpUt.closeDetails
+
+  @override
+  void initState() {    
+    //initial variables
+    _isNew = (widget.sn == null);
+    //_dispatchId = Xp.dispatches.first.id;
+
+    super.initState();
+    Future.delayed(Duration.zero, ()=> initAsync());
+  }
+
+  Future initAsync() async {
+    //set _row
+    if (_isNew){
+      _row = UserTab();
+      rowToForm();
+    } else {
+      var json = await UserTab.getMapAsync(widget.sn!);
+      _row = UserTab.fromMap(json!);
+      rowToForm();
+    }
+  }
+
+  //table row into form field
+  rowToForm(){
+    accountCtrl.text = _row.account;
+    nameCtrl.text = _row.name;
+    
+    setState((){_isOk = true;});
+  }
+
+  formToRow(){
+    _row.account = accountCtrl.text;
+    _row.name = nameCtrl.text;
+  }
+
+  Future onSaveAsync() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    formToRow();
+    if (_isNew){
+      await UserTab.insertAsync(_row);
+    } else {
+      await UserTab.updateAsync(_row);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isOk) return Container();
+
+    var title = '用戶維護-' + (_isNew ? '新增' : '修改');
+    return Scaffold(
+      appBar: WG.appBar(title),
+      body: SingleChildScrollView(
+        padding: WG.pagePad,
+        child: Column(
+          children: <Widget>[
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  WG.itext('帳號', accountCtrl, true),
+                  WG.itext('姓名', nameCtrl, true),
+                  WG.iselect('部門', _deptSn, widget.depts, true),
+                  /*
+                  WG.iselect('作業類別', _wcId, Xp.workClasses, (value){                    
+                    setState(() { _wcId = value; });
+                  }, true),
+                  WG.idate(context, workDateCtrl, '作業日期', ()=>setState((){}), true, '*'),
+                  WG.itime(context, workTimeCtrl, '作業時間', ()=>setState((){}), true, '*'),
+                  WG.iselect('區域', _areaId, Xp.areas, (value){                    
+                    setState(() { _areaId = value; });
+                  }, true),
+                  WG.textBtn('讀取經緯度', onReadLatLongAsync),
+
+                  WG.itext('備註', noteCtrl),
+                  */
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      WG.linkBtn('儲存', ()=> onSaveAsync()),
+                      WG.linkBtn('取消', (){}),
+                  ]),
+    ]))])));
+  }
+  
+} //class

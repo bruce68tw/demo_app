@@ -1,0 +1,73 @@
+{
+    // 使用 IntelliSense 以得知可用的屬性。
+    // 暫留以檢視現有屬性的描述。
+    // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Android (launch)",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "Android (attach)",
+            "type": "dart",
+            "request": "attach",
+            "flutterMode": "debug",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "test Android (attach)",
+            "type": "dart",
+            "request": "attach",
+            "flutterMode": "debug",
+            "program": "test/test_arg.dart",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "Android (release)",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "release",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "iPhone (launch)",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "iPhone (attach)",
+            "type": "dart",
+            "request": "attach",
+            "flutterMode": "debug",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "iPhone (release)",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "release",
+            "deviceId": "RQ3005CKWW"
+        },
+        {
+            "name": "Chrome",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug",
+            "deviceId": "chrome",
+            "args": [
+                "--web-hostname",
+                "192.168.66.11",
+                "--web-port",
+                "6001"
+            ]
+        }
+    ]
+}
