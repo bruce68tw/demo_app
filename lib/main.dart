@@ -1,5 +1,5 @@
-import 'package:base_lib/services/tool_ut.dart';
 import 'package:flutter/material.dart';
+import 'package:base_lib/all.dart';
 import 'services/all.dart';
 import 'user.dart';
 import 'dept.dart';
@@ -12,8 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainForm(),
+    return MaterialApp(
+      home: const MainForm(),
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          button: TextStyle(fontSize:16),
+        ),
+      ),      
     );
   }
 } //MyApp
@@ -54,7 +59,7 @@ class _MainFormState extends State<MainForm> {
     if (!_isOk) return Container();
 
     return Scaffold(
-      appBar: WG.appBar('Flutter Demo'),
+      appBar: WG2.appBar('Flutter Demo'),
       body: Column(
         children: [
           WG.linkBtn('1.Dept CRUD', ()=> ToolUt.openForm(context, const Dept())),

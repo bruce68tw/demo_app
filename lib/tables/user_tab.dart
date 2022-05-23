@@ -8,9 +8,11 @@ class UserTab {
   String account;
   String name;
   int? dept_sn;
-  String email;
-  String created;
+  String? email;
+  String? birth;
   String? note;
+  int status;
+  String? created;
 
   UserTab({
     //this.id = '', 
@@ -18,9 +20,11 @@ class UserTab {
     this.account = '',
     this.name = '',
     this.dept_sn,
-    this.email = '',
-    this.created = '',
-    this.note
+    this.email,
+    this.birth,
+    this.note,
+    this.status = 0,
+    this.created,
   });
 
   static Map<String, dynamic> toMap(UserTab table) {
@@ -31,8 +35,10 @@ class UserTab {
       'name': table.name,
       'dept_sn': table.dept_sn,
       'email': table.email,
+      'birth': table.birth,
+      'note': table.note,
+      'status': table.status,
       'created': table.created,
-      'note': table.note ?? '',
     };
   }
 
@@ -46,13 +52,15 @@ class UserTab {
       name: map['name'], 
       dept_sn: map['dept_sn'], 
       email: map['email'], 
+      birth: map['birth'], 
+      note: map['note'],
+      status: map['status'],
       created: map['created'], 
-      note: map['note'] ?? ''
     );    
   }
 
-  static Future<Map<String, dynamic>?> getMapAsync(int sn) async {
-    return await DbUt.getMapAsync("select * from user where sn=$sn");
+  static Future<Map<String, dynamic>> getMapAsync(int sn) async {
+    return (await DbUt.getMapAsync("select * from user where sn=$sn"))!;
   }
 
   static Future<bool> insertAsync(UserTab row) async {

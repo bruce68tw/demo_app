@@ -51,6 +51,9 @@ Create Table dept(
   sn Integer Primary Key AutoIncrement,
   name Text not null)
 ''']);
+
+    //temp add, recreate user table
+    //DbUt.reTableAsync('user');
   }
 
   //=== folder start ===
@@ -89,8 +92,10 @@ Create Table dept(
   }
 
   static Future<List<IdStrDto>> getDeptsAsync() async {
-    var sql = 'select sn ad id, name as str from dept order by sn';
-    return await DbUt.getIdStrsAsync(sql);
+    var sql = 'select sn as Id, name as Str from dept order by sn';
+    var rows = await DbUt.getIdStrsAsync(sql);
+    ListUt.selectAddEmpty(rows);
+    return rows;
   }
 
 } //class

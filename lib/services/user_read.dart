@@ -4,7 +4,7 @@ class UserRead {
 
   final _read = ReadDto(
       readSql: '''
-select u.id, u.name, u.account,
+select u.sn, u.name, u.account,
   d.name as dept_name
 from user u
 left join dept d on u.dept_sn=d.sn

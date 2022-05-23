@@ -47,49 +47,6 @@ class _DeptState extends State<Dept> {
     }
   }
 
-  Widget getBody() {
-    //add 'New' button first
-    var widgets = <Widget>[];
-    widgets.add(Align(
-      alignment: Alignment.topLeft,
-      child: WG.linkBtn('新增', ()=> onEditAsync())
-    ));
-    widgets.add(WG.divider());
-
-    //check if rows empty
-    var dtos = _pagerDto.dtos;
-    if (dtos.isEmpty){
-      widgets.add(WG.emptyMsg());
-    } else {
-      //add rows
-      for (var dto in dtos) {
-        widgets.add(Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                WG.linkBtn('修改', ()=> onEditAsync(dto.sn)),
-                WG.linkBtn('刪除', ()=> onDeleteAsync(dto.sn)),
-            ]),
-            WG.text('序號: ' + dto.sn.toString()),
-            WG.text('名稱: ' + dto.name),
-          ],
-        ));
-        widgets.add(WG.divider());
-      }
-
-      //add pager
-      widgets.add(_pagerSrv.getWidget(_pagerDto));
-    }
-
-    return ListView(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      children: widgets,
-    );
-  }
-
   //table row to form field
   rowToForm(){
     nameCtrl.text = _row.name;    
@@ -103,6 +60,7 @@ class _DeptState extends State<Dept> {
   //open edit dialog
   Future onEditAsync([int? sn]) async {
     //set _row
+    //var status = true;
     _isNew = (sn == null);
     _row = _isNew
       ? DeptTab()
@@ -115,16 +73,16 @@ class _DeptState extends State<Dept> {
       pageBuilder: (context2, animation, secondaryAnimation) {
         var title = '部門維護-' + (_isNew ? '新增' : '修改');
         return Scaffold(
-          appBar: WG.appBar(title),
+          appBar: WG2.appBar(title),
           body: SingleChildScrollView(
-            padding: WG.pagePad,
+            padding: WG2.pagePad,
             child: Column(
-              children: <Widget>[
+              children: [
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: <Widget>[
-                      WG.itext('名稱', nameCtrl, true),
+                    children: [
+                      WG.itext('名稱', nameCtrl, required: true),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -158,14 +116,57 @@ class _DeptState extends State<Dept> {
     await showAsync('儲存完成。');
   }
 
+  Widget getBody() {
+    //add 'New' button first
+    var widgets = <Widget>[];
+    widgets.add(Align(
+      alignment: Alignment.topLeft,
+      child: WG.linkBtn('新增', ()=> onEditAsync())
+    ));
+    widgets.add(WG2.divider());
+
+    //check if rows empty
+    var dtos = _pagerDto.dtos;
+    if (dtos.isEmpty){
+      widgets.add(WG2.emptyMsg());
+    } else {
+      //add rows
+      for (var dto in dtos) {
+        widgets.add(Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                WG.linkBtn('修改', ()=> onEditAsync(dto.sn)),
+                WG.linkBtn('刪除', ()=> onDeleteAsync(dto.sn)),
+            ]),
+            WG.labelText('序號 : ', dto.sn.toString()),
+            WG.labelText('名稱 : ', dto.name),
+          ],
+        ));
+        widgets.add(WG2.divider());
+      }
+
+      //add pager
+      widgets.add(_pagerSrv.getWidget(_pagerDto));
+    }
+
+    return ListView(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      children: widgets,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isOk) return Container();
 
     return Scaffold(
-      appBar: WG.appBar('部門維護'),
+      appBar: WG2.appBar('部門維護'),
       body: Padding(
-        padding: WG.pagePad,
+        padding: WG2.pagePad,
         child: getBody()
     ));
   }
