@@ -61,9 +61,12 @@ class _MainFormState extends State<MainForm> {
     return Scaffold(
       appBar: WG2.appBar('Flutter Demo'),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           WG.linkBtn('1.Dept CRUD', ()=> ToolUt.openForm(context, const Dept())),
           WG.linkBtn('2.User CRUD', ()=> ToolUt.openForm(context, const User())),
+          WG.linkBtn('3.檢視 sqlite 資料表', ()=> 
+            ToolUt.openForm(context, const Sqlite())),
         ]
       ),
     );

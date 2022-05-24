@@ -182,7 +182,7 @@ class _UserState extends State<User> {
       }
 
       //add pager
-      widgets.add(_pagerSrv.getWidget(_pagerDto));
+      widgets.add(_pagerSrv.getWidgetByDto(_pagerDto));
     }
 
     return ListView(
