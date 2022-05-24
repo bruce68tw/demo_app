@@ -98,11 +98,11 @@ class _UserState extends State<User> {
               body: SingleChildScrollView(
                 padding: WG2.pagePad,
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     Form(
                       key: _formKey,
                       child: Column(
-                        children: <Widget>[
+                        children: [
                           WG.itext('帳號', accountCtrl, required: true),
                           WG.itext('姓名', nameCtrl, required: true),
                           WG.iselect('部門', _row.dept_sn, _depts!, (value)=>
@@ -117,12 +117,10 @@ class _UserState extends State<User> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              WG.linkBtn('儲存', ()=> onSaveAsync(context2)),
-                              WG.linkBtn('取消', ()=> ToolUt.closePopup(context2)),
+                              WG.textBtn('儲存', ()=> onSaveAsync(context2)),
+                              WG.textBtn('取消', ()=> ToolUt.closePopup(context2)),
                           ]),
-            ]))])));  
-        });
-    });
+    ]))])));});});
   }
 
   Future onDeleteAsync(int sn) async {
@@ -153,7 +151,7 @@ class _UserState extends State<User> {
     var widgets = <Widget>[];
     widgets.add(Align(
       alignment: Alignment.topLeft,
-      child: WG.linkBtn('新增', ()=> onEditAsync())
+      child: WG.textBtn('新增', ()=> onEditAsync())
     ));
     widgets.add(WG2.divider());
 
@@ -170,8 +168,8 @@ class _UserState extends State<User> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                WG.linkBtn('修改', ()=> onEditAsync(dto.sn)),
-                WG.linkBtn('刪除', ()=> onDeleteAsync(dto.sn)),
+                WG.textBtn('修改', ()=> onEditAsync(dto.sn)),
+                WG.textBtn('刪除', ()=> onDeleteAsync(dto.sn)),
             ]),
             WG.labelText('帳號 : ', dto.account),
             WG.labelText('姓名 : ', dto.name),
