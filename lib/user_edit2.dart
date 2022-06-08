@@ -68,16 +68,16 @@ class _UserEdit2State extends State<UserEdit2> {
                   1: FlexColumnWidth(5),
                 }, 
                 children: [
-                  WG.tableRow('帳號', WG.itext('', accountCtrl, required: true)),
-                  WG.tableRow('姓名', WG.itext('', nameCtrl, required: true)),
-                  WG.tableRow('部門', WG.iselect('', _row.dept_sn, _depts!, (value)=>
-                    setState(()=> _row.dept_sn = int.parse(value)), required: true)),
-                  WG.tableRow('生日', WG.idate(context, '', birthCtrl, (value)=> setState((){}), 
-                    oneYearRange: false)),
-                  WG.tableRow('Email', WG.itext('', emailCtrl)),
-                  WG.tableRow('資料狀態', WG.icheck('', (_row.status == 1), (value)=> 
-                    setState(()=> _row.status = value ? 1 : 0))),
-                  WG.tableRow('備註', WG.itext('', noteCtrl, maxLines:5)),
+                  WG.itext2('帳號', accountCtrl, required: true),
+                  WG.itext2('姓名', nameCtrl, required: true),
+                  WG.iselect2('部門', _row.dept_sn, _depts!, (value)=>
+                    setState(()=> _row.dept_sn = int.parse(value)), required: true),
+                  WG.idate2(context, '生日', birthCtrl, (value)=> setState((){}), 
+                    oneYearRange: false),
+                  WG.itext2('Email', emailCtrl),
+                  WG.icheck2('資料狀態', (_row.status == 1), (value)=> 
+                    setState(()=> _row.status = value ? 1 : 0)),
+                  WG.itext2('備註', noteCtrl, maxLines:5),
               ]),
 
               Row(

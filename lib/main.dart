@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:base_lib/all.dart';
+import 'exchange_a.dart';
 import 'services/all.dart';
 import 'user.dart';
 import 'dept.dart';
@@ -68,7 +69,10 @@ class _MainFormState extends State<MainForm> {
           WG.textBtn('2.User CRUD', ()=> ToolUt.openForm(context, const User())),
           WG.textBtn('3.檢視 sqlite 資料表', ()=> 
             ToolUt.openForm(context, const Sqlite())),
-          WG.textBtn('4.傳統 style 輸入欄位', ()=> ToolUt.openForm(context, const UserEdit2())),
+          WG.textBtn('4.傳統 style 輸入欄位', ()=> 
+            ToolUt.openForm(context, const UserEdit2())),
+          WG.textBtn('5.資料交換 by Callback Function', ()=> 
+            ToolUt.openForm(context, const ExchangeA())),
         ]
       ),
     );
