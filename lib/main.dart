@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       home: const MainForm(),
       theme: ThemeData(
         textTheme: const TextTheme(
-          button: TextStyle(fontSize:16),
+          button: TextStyle(fontSize:Xp.fontSize),
         ),
       ),      
     );
@@ -48,12 +48,18 @@ class _MainFormState extends State<MainForm> {
     setState((){_isOk = true;});
   }
 
-  /*
-  //onclick item
-  void onItem(int index) {
-    setState(()=> _index = index);
+  //show gps
+  Future showGpsAsync() async {
+    ToolUt.openWait(context);
+    LogTimeUt.init();
+    var gps = await DeviceUt.getGpsAsync();
+    var miniSec = LogTimeUt.getMiniSec();
+    ToolUt.closeWait(context);
+    ToolUt.msg(context, '''
+經度: ${gps.longitude}
+緯度: ${gps.latitude}
+使用時間: $miniSec 毫秒''');
   }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +79,7 @@ class _MainFormState extends State<MainForm> {
             ToolUt.openForm(context, const UserEdit2())),
           WG.textBtn('5.資料交換 by Callback Function', ()=> 
             ToolUt.openForm(context, const ExchangeA())),
+          WG.textBtn('6.讀取經緯度', ()=> showGpsAsync()),
         ]
       ),
     );

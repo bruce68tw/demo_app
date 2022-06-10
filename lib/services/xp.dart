@@ -6,7 +6,7 @@ import 'package:base_lib/all.dart';
 class Xp {
   //=== constant start ===
   //global fontsize, double type
-  //static const double fontSize = 18;
+  static const double fontSize = 18;
 
   ///1.is https or not
   static const isHttps = false;
