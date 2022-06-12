@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:base_lib/all.dart';
 
@@ -6,19 +5,18 @@ import 'package:base_lib/all.dart';
 class Xp {
   //=== constant start ===
   //global fontsize, double type
-  static const double fontSize = 18;
+  static const double fontSize = 20;
 
   ///1.is https or not
   static const isHttps = false;
   static const isHttpsTest = false;
 
   ///2.api server end point
-  //static const apiServer = '192.168.1.100:5007';
-  static const apiServer = 'uper.fhnet.com.tw:5007';
-  //static const apiServerTest = '192.168.1.100:5007'; //e-fun
-  static const apiServerTest = 'uper.fhnet.com.tw:5007'; //e-fun  
+  static const apiServer = '192.168.1.100:5007';
   //=== constant end ===
 
+  //temp photo file path, png for repaintBoundary
+  static String tempPhoto = FunUt.dirApp + 'temp.png';
   //=== auto set start ===
   ///already init or not
   //static bool _isInit = false;
@@ -57,6 +55,7 @@ Create Table dept(
   }
 
   //=== folder start ===
+  /*
   /// get directory of workOrder image
   static String dirWoImage([String id = '', bool create = false]) {
     var dirWo = FunUt.dirApp + 'image/wo/';
@@ -73,6 +72,7 @@ Create Table dept(
 
     return dirSave + '/';
   }
+  */
   //=== folder end ===
 
   /// get result

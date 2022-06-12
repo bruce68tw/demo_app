@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:base_lib/all.dart';
 import 'exchange_a.dart';
+import 'camera_word_a.dart';
 import 'services/all.dart';
 import 'user.dart';
 import 'dept.dart';
 import 'user_edit2.dart';
 
-void main()=> runApp(const MyApp());
+void main() {
+  runApp(const MainApp());
+}
 
 /// This Widget is the main application widget.
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +23,9 @@ class MyApp extends StatelessWidget {
         textTheme: const TextTheme(
           button: TextStyle(fontSize:Xp.fontSize),
         ),
-      ),      
-    );
+    ));
   }
-} //MyApp
+} //MainApp
 
 class MainForm extends StatefulWidget {
   const MainForm({Key? key}) : super(key: key);
@@ -40,12 +42,22 @@ class _MainFormState extends State<MainForm> {
     //call before rebuild()
     super.initState();
 
-    Future.delayed(Duration.zero, ()=> initAsync());
+    Future.delayed(Duration.zero, ()=> showAsync());
   }
 
-  Future initAsync() async {
+  //callback after CameraWordB take photo
+  void afterTakePhoto(BuildContext context2){
+    ToolUt.closeForm(context2);
+    ToolUt.msg(context, '儲存完成。');    
+  }
+
+  Future showAsync() async {
+    //set global
+    FunUt.fontSize = Xp.fontSize;
+    FunUt.init(Xp.isHttps, Xp.apiServer);
+
     Xp.initDb();    
-    setState((){_isOk = true;});
+    setState(()=> _isOk = true);
   }
 
   //show gps
@@ -80,9 +92,9 @@ class _MainFormState extends State<MainForm> {
           WG.textBtn('5.資料交換 by Callback Function', ()=> 
             ToolUt.openForm(context, const ExchangeA())),
           WG.textBtn('6.讀取經緯度', ()=> showGpsAsync()),
-        ]
-      ),
-    );
+          WG.textBtn('7.照相加上文字', ()=> 
+            ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: afterTakePhoto))),
+    ]));
   }
 
 } //class

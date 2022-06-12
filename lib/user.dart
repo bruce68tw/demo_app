@@ -118,7 +118,7 @@ class _UserState extends State<User> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               WG.textBtn('儲存', ()=> onSaveAsync(context2)),
-                              WG.textBtn('取消', ()=> ToolUt.closePopup(context2)),
+                              WG.textBtn('取消', ()=> ToolUt.closeForm(context2)),
                           ]),
     ]))])));});});
   }
@@ -139,7 +139,7 @@ class _UserState extends State<User> {
       : await UserTab.updateAsync(_row);
 
     //close edit dialog
-    ToolUt.closePopup(context2);
+    ToolUt.closeForm(context2);
 
     //show form and msg
     await showAsync('儲存完成。');

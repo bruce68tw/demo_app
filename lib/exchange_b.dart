@@ -21,7 +21,7 @@ class _ExchangeBState extends State<ExchangeB> {
         child: Column(
           children: [
             WG.elevBtn('呼叫A畫面', (){
-              ToolUt.closePopup(context);
+              ToolUt.closeForm(context);
               widget.fnCallback();
     })])));
   }
