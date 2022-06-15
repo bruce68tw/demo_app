@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:base_lib/all.dart';
-
-import 'all_com.dart';
 import 'camera_word_b.dart';
 
 class CameraWordA extends StatefulWidget {
@@ -18,13 +14,8 @@ class CameraWordA extends StatefulWidget {
 class _CameraWordAState extends State<CameraWordA> {
   bool _isOk = false;       //state variables
 
-  //constant
-  //final Image _noPhotoImage = Image.asset('images/noImage.png');
-  //final String _tempPhoto = FunUt.dirApp + 'temp.jpg';
-
   //input fields
   CameraController? cameraCtrl;
-  //final wordCtrl = TextEditingController(text:'圖檔底部文字');
   
   String _flashType = 'A';  //default auto
 
@@ -117,13 +108,10 @@ class _CameraWordAState extends State<CameraWordA> {
   Widget build(BuildContext context) {
     if (!_isOk) return Container();
 
-    return Material(
-      child: Stack(
+    return Material(child: Stack(
       children: [
         //解決影像失真的問題
-        MaterialApp(
-          home: CameraPreview(cameraCtrl!),
-        ),
+        MaterialApp(home: CameraPreview(cameraCtrl!)),
         Align(
           alignment: FractionalOffset.bottomCenter,
           child: Padding(

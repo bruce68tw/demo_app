@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:base_lib/all.dart';
+import 'services/all.dart';
 import 'exchange_a.dart';
 import 'camera_word_a.dart';
-import 'services/all.dart';
+import 'photo.dart';
+//import 'test1.dart';
 import 'user.dart';
 import 'dept.dart';
 import 'user_edit2.dart';
 
+//final helloWorldProvider = Provider((_) => 'Hello world');
+
 void main() {
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 /// This Widget is the main application widget.
@@ -94,7 +99,9 @@ class _MainFormState extends State<MainForm> {
           WG.textBtn('6.讀取經緯度', ()=> showGpsAsync()),
           WG.textBtn('7.照相加上文字', ()=> 
             ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: afterTakePhoto))),
+          WG.textBtn('8.狀態管理 Riverpod', ()=> 
+            ToolUt.openForm(context, const Photo())),
     ]));
   }
 
-} //class
+} //class  
