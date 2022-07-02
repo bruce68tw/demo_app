@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:base_lib/all.dart';
+import 'my_http.dart';
 import 'services/all.dart';
 import 'exchange_a.dart';
 import 'camera_word_a.dart';
@@ -59,6 +60,7 @@ class _MainFormState extends State<MainForm> {
   Future showAsync() async {
     //set global
     FunUt.fontSize = Xp.fontSize;
+    FunUt.logHttpUrl = true;  //temp add
     FunUt.init(Xp.isHttps, Xp.apiServer);
 
     Xp.initDb();    
@@ -90,9 +92,9 @@ class _MainFormState extends State<MainForm> {
         children: [
           WG.textBtn('1.Dept CRUD', ()=> ToolUt.openForm(context, const Dept())),
           WG.textBtn('2.User CRUD', ()=> ToolUt.openForm(context, const User())),
-          WG.textBtn('3.檢視 sqlite 資料表', ()=> 
+          WG.textBtn('3.檢視 Sqlite 資料表', ()=> 
             ToolUt.openForm(context, const Sqlite())),
-          WG.textBtn('4.傳統 style 輸入欄位', ()=> 
+          WG.textBtn('4.傳統 Style 輸入欄位', ()=> 
             ToolUt.openForm(context, const UserEdit2())),
           WG.textBtn('5.資料交換 by Callback Function', ()=> 
             ToolUt.openForm(context, const ExchangeA())),
@@ -101,6 +103,10 @@ class _MainFormState extends State<MainForm> {
             ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: afterTakePhoto))),
           WG.textBtn('8.狀態管理 Riverpod', ()=> 
             ToolUt.openForm(context, const Photo())),
+          WG.textBtn('9.HTTP 呼叫', ()=> 
+            ToolUt.openForm(context, const MyHttp())),
+          WG.textBtn('10.畫面繼承', ()=> 
+            ToolUt.openForm(context, const MyHttp())),
     ]));
   }
 

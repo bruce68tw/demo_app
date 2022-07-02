@@ -5,6 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'all_com.dart';
 
+//global provider 
+final photoProvider = StateNotifierProvider<PhotoNotifier, PhotoVo>((ref)=> PhotoNotifier());
+
 /// Model(view object) for UI
 class PhotoVo {
   PhotoVo({this.image1, this.image2});
@@ -31,21 +34,19 @@ class PhotoNotifier extends StateNotifier<PhotoVo>{
 }
 
 /// UI
-class PhotoYes extends ConsumerWidget  {
+class PhotoYes extends ConsumerWidget {  
   PhotoYes({ Key? key }) : super(key: key);
-
-  final _provider = StateNotifierProvider<PhotoNotifier, PhotoVo>((ref)=> PhotoNotifier());
   final _noImage = Image.asset('images/noImage.png');
 
   /// get image widget
   Widget getImage(int index, WidgetRef ref) {
-    var model = ref.watch(_provider);
+    var model = ref.watch(photoProvider);
     return Material(
       child: InkWell(
         onTap: () async {
           var file = await ImagePicker().pickImage(source: ImageSource.gallery);
           if (file != null){
-            ref.read(_provider.notifier).setImage(index, Image.file(File(file.path)));
+            ref.read(photoProvider.notifier).setImage(index, Image.file(File(file.path)));
           }
         },
         child: (index == 1)

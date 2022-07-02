@@ -71,7 +71,7 @@ class UserTab {
     return await DbUt.updateAsync('user', UserTab.toMap(row), 'sn=?', [row.sn!]);
   }
 
-  static Future<bool> deleteAsync(int sn) async {
+  static Future<int> deleteAsync(int sn) async {
     return await DbUt.deleteAsync('user', 'sn=?', [sn]);
   }
 

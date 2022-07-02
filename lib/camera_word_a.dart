@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:base_lib/all.dart';
+import 'services/widget2.dart';
 import 'camera_word_b.dart';
 
 class CameraWordA extends StatefulWidget {
@@ -121,7 +122,7 @@ class _CameraWordAState extends State<CameraWordA> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   WG.elevBtn('拍照', ()=> onTakePhotoAsync()),
-                  WG.gap2(),
+                  WG2.vGap(),
                   SizedBox(
                     width: 80,
                     child: iselect2(_flashType, _flashIcon[_flashType]!, _flashTypeList, (value){

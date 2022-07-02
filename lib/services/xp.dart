@@ -5,14 +5,15 @@ import 'package:base_lib/all.dart';
 class Xp {
   //=== constant start ===
   //global fontsize, double type
-  static const double fontSize = 20;
+  static const fontSize = 20.0;
+  static const titleFontSize = 18.0; 
 
   ///1.is https or not
   static const isHttps = false;
   static const isHttpsTest = false;
 
   ///2.api server end point
-  static const apiServer = '192.168.1.100:5007';
+  static const apiServer = '192.168.1.103:5001';
   //=== constant end ===
 
   //temp photo file path, png for repaintBoundary

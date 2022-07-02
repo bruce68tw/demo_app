@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:base_lib/all.dart';
+import 'all_com.dart';
+
+//global provider 
+final customLoginProvider = StateNotifierProvider<CustomLoginNotifier, 
+  CustomLoginVo>((ref)=> CustomLoginNotifier());
+
+/// Model(view object) for UI
+class CustomLoginVo {
+  CustomLoginVo({required this.accountCtrl, required this.pwdCtrl});
+  TextEditingController accountCtrl;
+  TextEditingController pwdCtrl;
+
+  CustomLoginVo _getState(){
+    return CustomLoginVo(accountCtrl: accountCtrl, pwdCtrl: pwdCtrl);
+  }  
+
+  /// return model for  state !!
+  CustomLoginVo setAccount(TextEditingController accountCtrl){
+    this.accountCtrl = accountCtrl;
+    return _getState();
+  }  
+
+  CustomLoginVo setPwd(TextEditingController pwdCtrl){
+    this.pwdCtrl = pwdCtrl;
+    return _getState();
+  }  
+}
+
+/// ViewModel(notifier)
+class CustomLoginNotifier extends StateNotifier<CustomLoginVo>{ CustomLoginNotifier(): 
+    super(CustomLoginVo(accountCtrl:TextEditingController(), pwdCtrl:TextEditingController()));
+
+  /// method: update image
+  /// state model property is immutable here !!
+  void setImage(int index, Image image){
+    state = state.copyWith(index, image);
+  }
+}
+
+/// UI
+class CustomLogin extends ConsumerWidget {  
+  final _formKey = GlobalKey<FormState>();
+  //bool _isOk = false;   //status
+
+  //input fields
+  //final accountCtrl = TextEditingController();
+  //final pwdCtrl = TextEditingController();
+
+  /*
+  @override
+  void initState() {
+    //call before rebuild()
+    super.initState();
+
+    //讀取資料, call async rebuild
+    Future.delayed(Duration.zero, ()=> showAsync());
+  }
+  */
+
+  Future onLoginAsync() async {
+    //check input
+    if (accountCtrl.text == '' || pwdCtrl.text == ''){
+      ToolUt.msg(context, '帳號/密碼不可空白。');
+      return;
+    }
+
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    //if (!_isOk) return Container();
+    var model = ref.watch(customLoginProvider);
+
+    //return SingleChildScrollView(
+    return Material(child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //image
+          Container(
+            alignment: Alignment.center, // This is needed
+            child: Image.asset('images/login.png',
+              fit: BoxFit.contain,
+              //width: 300,
+            ),
+          ),
+
+          //input fields
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left:30, right:30, bottom:10),
+                    child: Table(
+                      columnWidths: const {
+                        0: FlexColumnWidth(2),
+                        1: FlexColumnWidth(5),
+                      }, 
+                      children: [
+                        WG.itext2('帳號', model.accountCtrl, required:true),
+                        WG.itext2('密碼', model.pwdCtrl, required:true, isPwd:true),
+                  ])),
+                  WG2.centerElevBtn('登入', ()=> onLoginAsync()),
+    ])))])));
+  }
+  
+} //class
