@@ -60,7 +60,7 @@ class UserTab {
   }
 
   static Future<Map<String, dynamic>> getMapAsync(int sn) async {
-    return (await DbUt.getMapAsync("select * from user where sn=$sn"))!;
+    return (await DbUt.getJsonAsync("select * from user where sn=$sn"))!;
   }
 
   static Future<bool> insertAsync(UserTab row) async {

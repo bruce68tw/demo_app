@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:base_lib/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'all_com.dart';
+
+/// Model(view object) for UI
+//@immutable
+class CheckDto {
+  CheckDto(this.label, this.checked);
+  String label;
+  bool checked;
+
+  /*
+  CheckDto copyWith(String label, bool checked){
+    return CheckDto(label, checked);
+  } 
+  */ 
+}
+
+/// ViewModel(notifier)
+class ChecksNotifier extends StateNotifier<List<CheckDto>>{
+  ChecksNotifier(): super([]);
+
+  static final provider = StateNotifierProvider<ChecksNotifier, List<CheckDto>>((ref)=> ChecksNotifier());
+
+  //void setCheck(CheckDto row, bool value){
+  void setCheck(int index, bool value){
+  //void setCheck(String label, bool value){
+    //row = row.copyWith(row.label, value);
+    //state[index] = state[index].copyWith(state[index].label, value);
+    //state[index] = CheckDto(state[index].label, value);
+    var item = CheckDto(state[index].label, value);
+    state.removeAt(index);
+    state.insert(index, item);
+    //notifyListeners();
+    //state[index].checked = value;  //not work !!
+    /*
+    state = [
+      for (final item in state)
+        if (item.label == label)
+          item.copyWith(label, value)
+        else
+          item,
+    ];
+    */
+  }
+
+  void loadRows(List<CheckDto> rows){
+    state = rows;
+  }
+}
+
+/// UI
+class ChecksYes extends ConsumerStatefulWidget {  
+  const ChecksYes({ Key? key }) : super(key: key);
+
+  @override
+  ChecksYesState createState()=> ChecksYesState();
+}
+
+class ChecksYesState extends ConsumerState<ChecksYes> {
+  bool _isOk = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, ()=> showAsync());
+  }
+
+  Future showAsync() async {
+    Future.delayed(Duration.zero);
+
+    List<CheckDto> rows = [];
+    for(var i=0; i<100; i++){
+      rows.add(CheckDto('item-$i', false));
+    }
+    ref.read(ChecksNotifier.provider.notifier).loadRows(rows);
+
+    setState(()=> _isOk = true);          
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isOk) return Container();
+
+    var rows = ref.watch(ChecksNotifier.provider);
+    /*
+    List<Widget> widgets = [];
+    for(var i=0; i<rows.length; i++){
+      var row = rows[i];
+      widgets.add(WG.icheck(row.label, row.checked, (value){
+        ref.read(ChecksNotifier.provider.notifier).setCheck(i, value);
+      }));
+    }
+    */
+
+    return Scaffold(
+      appBar: WG2.appBar('8b.Riverpod-多筆 CheckBox'),
+      body: ListView(
+      padding: const EdgeInsets.all(10),
+      children: 
+      Consumer<List<CheckDto>>(
+          builder: (a1, ref, a2)=> ListView.builder(
+            itemCount: vo.checks.length,
+            itemBuilder: (_, i)=> 
+              WG.icheck('item-$i', vo.checks[i], (value)=> vo.setCheck(i, value))
+    ))
+      /*[for(var i=0; i<rows.length; i++)
+        WG.icheck(rows[i].label, rows[i].checked, (value){
+          ref.read(ChecksNotifier.provider.notifier).setCheck(i, value);
+      })
+    ]*/
+    ));
+  }
+
+} //class

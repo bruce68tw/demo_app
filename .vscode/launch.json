@@ -13,6 +13,14 @@
             "deviceId": "RQ3005CKWW"
         },
         {
+            "name": "Android2 (launch)",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "deviceId": "WUJ01R5YHC"
+        },
+        {
             "name": "Android (attach)",
             "type": "dart",
             "request": "attach",

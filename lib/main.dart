@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:provider/provider.dart';
 import 'package:base_lib/all.dart';
+import 'checks.dart';
+//import 'checks_yes.dart_old3';
+import 'derive.dart';
 import 'my_http.dart';
 import 'services/all.dart';
 import 'exchange_a.dart';
@@ -15,6 +19,13 @@ import 'user_edit2.dart';
 
 void main() {
   runApp(const ProviderScope(child: MainApp()));
+  //runApp(const MainApp());
+  /*
+  runApp(ChangeNotifierProvider<ChecksYesProvider>(
+    child: const MainApp(),
+    create: (_) => ChecksYesProvider(), // Create a new ChangeNotifier object
+  ));
+  */
 }
 
 /// This Widget is the main application widget.
@@ -23,6 +34,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //包一層 provider(multiple for 擴充)
+    /*
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=> ChecksYesVo()),
+      ],
+      child: MaterialApp(
+        home: const MainForm(),
+        theme: ThemeData(
+          textTheme: const TextTheme(
+            button: TextStyle(fontSize:Xp.fontSize),
+    ))));
+    */
     return MaterialApp(
       home: const MainForm(),
       theme: ThemeData(
@@ -30,6 +54,7 @@ class MainApp extends StatelessWidget {
           button: TextStyle(fontSize:Xp.fontSize),
         ),
     ));
+    
   }
 } //MainApp
 
@@ -87,27 +112,30 @@ class _MainFormState extends State<MainForm> {
 
     return Scaffold(
       appBar: WG2.appBar('Flutter Demo'),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          WG.textBtn('1.Dept CRUD', ()=> ToolUt.openForm(context, const Dept())),
-          WG.textBtn('2.User CRUD', ()=> ToolUt.openForm(context, const User())),
-          WG.textBtn('3.檢視 Sqlite 資料表', ()=> 
-            ToolUt.openForm(context, const Sqlite())),
-          WG.textBtn('4.傳統 Style 輸入欄位', ()=> 
-            ToolUt.openForm(context, const UserEdit2())),
-          WG.textBtn('5.資料交換 by Callback Function', ()=> 
-            ToolUt.openForm(context, const ExchangeA())),
-          WG.textBtn('6.讀取經緯度', ()=> showGpsAsync()),
-          WG.textBtn('7.照相加上文字', ()=> 
-            ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: afterTakePhoto))),
-          WG.textBtn('8.狀態管理 Riverpod', ()=> 
-            ToolUt.openForm(context, const Photo())),
-          WG.textBtn('9.HTTP 呼叫', ()=> 
-            ToolUt.openForm(context, const MyHttp())),
-          WG.textBtn('10.畫面繼承', ()=> 
-            ToolUt.openForm(context, const MyHttp())),
-    ]));
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            WG.textBtn('1.Dept CRUD', ()=> ToolUt.openForm(context, const Dept())),
+            WG.textBtn('2.User CRUD', ()=> ToolUt.openForm(context, const User())),
+            WG.textBtn('3.檢視 Sqlite 資料表', ()=> 
+              ToolUt.openForm(context, const Sqlite())),
+            WG.textBtn('4.傳統 Style 輸入欄位', ()=> 
+              ToolUt.openForm(context, const UserEdit2())),
+            WG.textBtn('5.資料交換 by Callback Function', ()=> 
+              ToolUt.openForm(context, const ExchangeA())),
+            WG.textBtn('6.讀取經緯度', ()=> showGpsAsync()),
+            WG.textBtn('7.照相加上文字', ()=> 
+              ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: afterTakePhoto))),
+            WG.textBtn('8a.狀態管理 Riverpod-簡單範例', ()=> 
+              ToolUt.openForm(context, const Photo())),
+            WG.textBtn('8b.狀態管理 Provider-多筆 CheckBox', ()=> 
+              ToolUt.openForm(context, const Checks())),
+            WG.textBtn('9.HTTP 呼叫', ()=> 
+              ToolUt.openForm(context, const MyHttp())),
+            WG.textBtn('10.畫面繼承', ()=> 
+              ToolUt.openForm(context, const Derive())),
+    ])));
   }
 
 } //class  

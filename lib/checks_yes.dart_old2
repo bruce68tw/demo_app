@@ -1,0 +1,105 @@
+//import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:base_lib/all.dart';
+import 'all_com.dart';
+import 'package:provider/provider.dart';
+
+//provider
+class ChecksYesProvider with ChangeNotifier {
+  //int _loops = 100;
+  final List<bool> _status = List.filled(100, false);
+
+  List<bool> get status => _status;
+
+  /*
+  List<bool> getStatus(){
+    return _status;
+  }
+  */
+
+  void setStatus(int index, bool value){
+    _status[index] = value;
+    notifyListeners();
+  }
+
+}
+
+/*
+class ChecksYesVo {
+  final List<bool> status = List.filled(100, false);
+}
+*/
+
+class ChecksYes extends StatefulWidget {
+  const ChecksYes({ Key? key }) : super(key: key);
+
+  @override
+  ChecksYesState createState() => ChecksYesState();
+}
+
+class ChecksYesState extends State<ChecksYes> {
+  //final StreamController<ChecksYesVo> _streamCtrl = StreamController<ChecksYesVo>();
+  //Stream<ChecksYesVo> get _stream => _streamCtrl.stream;
+  //final ChecksYesVo _vo = ChecksYesVo();
+  /*
+  final int _loops = 100;
+  final List<bool> _status = List.filled(100, false);
+  //final ChecksYesVo _vo = ChecksYesVo();
+  final Stream<ChecksYesVo> _vo = Stream<ChecksYesVo>.fromIterable( 
+ <List>[ 
+ List.generate(10, (int i) => i), 
+ ], 
+ ); 
+
+  @override
+  void dispose() {
+    _streamCtrl.close();
+    super.dispose();
+  }
+
+  Widget getBody(ChecksYesVo vo) {
+    var status = _vo.getStatus();
+    return ListView(
+      padding: const EdgeInsets.all(10),
+      children: [
+        for(var i=0; i<status.length; i++)
+          WG.icheck('item-$i', status[i], (value)=> vo.setStatus(i, value))
+      ]
+    );
+  }
+  */
+
+  @override
+  Widget build(BuildContext context) {
+    var status = context.watch<ChecksYesProvider>().status;
+    //var myList = context.watch<MovieProvider>().myList;
+
+    //var status = _vo.getStatus();
+
+    return Scaffold(
+      appBar: WG2.appBar('8b.Riverpod-多筆 CheckBox'),
+      body: ListView(
+      padding: const EdgeInsets.all(10),
+      children: [
+        for(var i=0; i<status.length; i++)
+          WG.icheck('item-$i', status[i], (value){
+            context.read<ChecksYesProvider>().setStatus(i, value);
+          })
+      ]
+    )
+      /*
+      StreamBuilder(
+        stream: _stream,
+        builder: (BuildContext context2, AsyncSnapshot<ChecksYesVo?> snapshot) {
+          return snapshot.hasData
+            ? getBody(snapshot.data!)
+            : Container();
+        }
+    )
+    */
+
+    );    
+  }
+
+} //class
