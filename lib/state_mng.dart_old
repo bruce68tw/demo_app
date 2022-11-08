@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:base_lib/all.dart';
+import 'all_com.dart';
+import 'state_mng_no.dart';
+import 'state_mng_prov.dart';
+import 'state_mng_river.dart';
+
+class StateMng extends StatefulWidget {
+  const StateMng({ Key? key }) : super(key: key);
+
+  @override
+  StateMngState createState() => StateMngState();
+}
+
+class StateMngState extends State<StateMng> {
+
+  @override
+  Widget build(BuildContext context) {
+    //if (!_isOk) return Container();
+
+    return Scaffold(
+      appBar: WG2.appBar('8.狀態管理'),
+      body: Padding(
+        padding: WG2.pagePad,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            WG.elevBtn('不使用狀態管理', ()=> ToolUt.openForm(context, const StateMngNo())),
+            WG.elevBtn('狀態管理 by Provider', ()=> ToolUt.openForm(context, const StateMngProv())),
+            WG.elevBtn('狀態管理 by RiverPod', ()=> ToolUt.openForm(context, const StateMngRiver())),
+    ])));
+  }
+
+} //class

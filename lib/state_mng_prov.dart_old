@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:base_lib/all.dart';
+import 'all_com.dart';
+
+class StateMngProvVo with ChangeNotifier {  
+  List<bool> checks = [];
+
+  //constructor
+  StateMngProvVo(this.checks);
+
+  /*
+  void init(List<bool> status2){
+    checks = status2;
+    notifyListeners();
+  }
+  */
+  
+  void setCheck(int index, bool value){
+    checks[index] = value;
+    notifyListeners();
+  }
+}
+
+class StateMngProv extends StatelessWidget {
+  const StateMngProv({ Key? key }) : super(key: key);
+
+  /// initial
+  StateMngProvVo initVo(){
+    return StateMngProvVo(List.filled(500, false));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<StateMngProvVo>(
+      create: (_)=> initVo(),
+      child: Scaffold(
+        appBar: WG2.appBar('8.狀態管理 by Provider'),
+        body: Consumer<StateMngProvVo>(
+          builder: (a1, vo, a2)=> ListView.builder(
+            itemCount: vo.checks.length,
+            itemBuilder: (_, i)=> 
+              WG.icheck('item-$i', vo.checks[i], (value)=> vo.setCheck(i, value))
+    ))));
+  }
+}

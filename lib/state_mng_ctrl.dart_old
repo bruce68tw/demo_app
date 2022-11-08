@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:base_lib/all.dart';
+import 'package:get/get.dart';
+import 'all_com.dart';
+
+/// controller 要继承 GetxController
+class StateMngCtrl extends GetxController {
+  List<String> searchRecords = [];
+  late TextEditingController editingController;
+  String searchText = '';
+  List<String> dataList = [];
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    editingController = TextEditingController();
+
+    /// 获取历史记录
+    ProjectCloudSearchCache.getProjectCloudSearchList().then((value) {
+      searchRecords.addAll(value);
+      update();
+    });
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+
+    /// 添加缓存
+    ProjectCloudSearchCache.setProjectCloudSearchList(searchRecords);
+  }
+
+  /// 搜索请求 处理缓存
+  void searchRequest(String text,
+      {bool isRequest = true, bool clickRecords = false}) {
+    Utils.logs(text);
+    searchText = text;
+
+    if (clickRecords) {
+      editingController.text = text;
+    }
+
+    /// 请求接口
+    if (isRequest) {
+      dataList.add('1');
+      searchRecordsHandle();
+    }
+    update();
+  }
+
+  /// 删除记录
+  void deleteRecord(int index) {
+    searchRecords.removeAt(index);
+    update();
+  }
+
+  /// 清空记录
+  void clearRecords() {
+    searchRecords.clear();
+    /// 手动刷新 调用update
+    update();
+  }
+
+  /// 搜索记录处理
+  void searchRecordsHandle() {
+    if (searchText.isNotEmpty) {
+      if (!searchRecords.contains(searchText)) {
+        if (searchRecords.length >= 10) {
+          searchRecords.removeLast();
+        }
+        searchRecords.insert(0, searchText);
+      }
+    }
+  }
+}

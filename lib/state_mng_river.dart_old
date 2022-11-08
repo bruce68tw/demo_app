@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:base_lib/all.dart';
+//import 'package:provider/provider.dart';
+import 'all_com.dart';
+
+//const _uuid = Uuid();
+
+//1.定義單筆資料內容
+@immutable
+class MyItem {
+  const MyItem({
+    required this.id,
+    required this.label,
+    this.status = false,
+  });
+
+  final String id;
+  final String label;
+  final bool status;
+
+  /*
+  @override
+  String toString() {
+    return 'MyItem(label: $label, status: $status)';
+  }
+  */
+}
+
+//2.建立notifier for 多筆資料
+class MyItemsNotifier extends StateNotifier<List<MyItem>> {
+  MyItemsNotifier([List<MyItem>? initItems]) : super(initItems ?? []);
+
+  /*
+  void add(String label) {
+    state = [
+      ...state,
+      MyItem(
+        id: _uuid.v4(),
+        label: label,
+      ),
+    ];
+  }
+  */
+
+  void toggle(String id) {
+    state = [
+      for (final item in state)
+        if (item.id == id)
+          MyItem(
+            id: item.id,
+            label: item.label,
+            status: !item.status,
+          )
+        else
+          item,
+    ];
+  }
+
+  /*
+  void edit({required String id, required String label}) {
+    state = [
+      for (final todo in state)
+        if (todo.id == id)
+          Item1(
+            id: todo.id,
+            status: todo.status,
+            label: label,
+          )
+        else
+          todo,
+    ];
+  }
+
+  void remove(Item1 item) {
+    state = state.where((a) => a.id != item.id).toList();
+  }
+  */
+}
+
+//3.建立 global provider 
+final myItemsProvider = StateNotifierProvider<MyItemsNotifier, List<MyItem>>((ref) {
+  List<MyItem> items = [];
+  for(var i=0; i<500; i++){
+    items.add(MyItem(id: i.toString(), label: 'item-$i', status: false));
+  }
+  return MyItemsNotifier(items);
+});
+
+//4.UI
+class StateMngRiver extends StatefulWidget {
+  const StateMngRiver({ Key? key }) : super(key: key);
+
+  @override
+  StateMngRiverState createState() => StateMngRiverState();
+}
+
+class StateMngRiverState extends State<StateMngRiver> {
+  @override
+  Widget build(BuildContext context) {
+    //initial
+    List<MyItem> items = [];
+    //List<MyItem> myItems = ref.watch(myItemsProvider);
+    //context.read()
+    return Scaffold(
+      appBar: WG2.appBar('8.狀態管理 by Riverpod'),
+      body: ListView(
+        padding: const EdgeInsets.all(10),
+        children: [
+          for (var item in items)
+            StateMngRiver2(item: item)
+        ]
+    ));
+  }
+}
+
+
+class StateMngRiver2 extends ConsumerWidget {
+  const StateMngRiver2({Key? key, required this.item}): super(key: key);
+
+  final MyItem item;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    //List<MyItem> myItems = ref.watch(myItemsProvider);
+
+    return WG.icheck(item.label, item.status, (value)=> ref.read(myItemsProvider.notifier).toggle(item.id));
+  }
+}

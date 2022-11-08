@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:flutter_riverpod/flutter_riverpod.dart';
 //import 'package:provider/provider.dart';
 import 'package:base_lib/all.dart';
-import 'checks.dart';
+//import 'checks.dart';
 //import 'checks_yes.dart_old3';
 import 'derive.dart';
 import 'my_http.dart';
 import 'services/all.dart';
 import 'exchange_a.dart';
 import 'camera_word_a.dart';
-import 'photo.dart';
+//import 'photo.dart';
 //import 'test1.dart';
+import 'state_mng_getx.dart';
 import 'user.dart';
 import 'dept.dart';
 import 'user_edit2.dart';
@@ -18,8 +19,8 @@ import 'user_edit2.dart';
 //final helloWorldProvider = Provider((_) => 'Hello world');
 
 void main() {
-  runApp(const ProviderScope(child: MainApp()));
-  //runApp(const MainApp());
+  //runApp(const ProviderScope(child: MainApp()));  //for RiverPod
+  runApp(const MainApp());
   /*
   runApp(ChangeNotifierProvider<ChecksYesProvider>(
     child: const MainApp(),
@@ -62,10 +63,10 @@ class MainForm extends StatefulWidget {
   const MainForm({Key? key}) : super(key: key);
 
   @override
-  _MainFormState createState() => _MainFormState();
+  MainFormState createState() => MainFormState();
 }
 
-class _MainFormState extends State<MainForm> {
+class MainFormState extends State<MainForm> {
   bool _isOk = false;
 
   @override
@@ -127,10 +128,14 @@ class _MainFormState extends State<MainForm> {
             WG.textBtn('6.讀取經緯度', ()=> showGpsAsync()),
             WG.textBtn('7.照相加上文字', ()=> 
               ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: afterTakePhoto))),
+              /*
             WG.textBtn('8a.狀態管理 Riverpod-簡單範例', ()=> 
               ToolUt.openForm(context, const Photo())),
             WG.textBtn('8b.狀態管理 Provider-多筆 CheckBox', ()=> 
               ToolUt.openForm(context, const Checks())),
+              */
+            WG.textBtn('8.狀態管理 by Getx', ()=> 
+              ToolUt.openForm(context, const StateMngGetx())),
             WG.textBtn('9.HTTP 呼叫', ()=> 
               ToolUt.openForm(context, const MyHttp())),
             WG.textBtn('10.畫面繼承', ()=> 
