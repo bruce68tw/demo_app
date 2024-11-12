@@ -89,7 +89,7 @@ class _CameraWordBState extends State<CameraWordB> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 WG.elevBtn('儲存', ()=> onSaveAsync()),
-                WG2.hGap(),
+                WG.hGap(),
                 WG.elevBtn('重新拍照', () async {
                   ToolUt.closeForm(context);
                   ToolUt.openForm(context, CameraWordA(fnAfterTakePhoto: widget.fnAfterTakePhoto));

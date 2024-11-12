@@ -24,20 +24,20 @@ class DeptTab {
     );    
   }
 
-  static Future<Map<String, dynamic>> getMapAsync(int sn) async {
-    return (await DbUt.getJsonAsync("select * from dept where sn=$sn"))!;
+  static Future<Map<String, dynamic>> getMapA(int sn) async {
+    return (await DbUt.getJsonA("select * from dept where sn=$sn"))!;
   }
 
-  static Future<bool> insertAsync(DeptTab row) async {
-    return await DbUt.insertAsync('dept', DeptTab.toMap(row));
+  static Future<bool> insertA(DeptTab row) async {
+    return await DbUt.insertA('dept', DeptTab.toMap(row));
   }
 
-  static Future<bool> updateAsync(DeptTab row) async {
-    return await DbUt.updateAsync('dept', DeptTab.toMap(row), 'sn=?', [row.sn!]);
+  static Future<bool> updateA(DeptTab row) async {
+    return await DbUt.updateA('dept', DeptTab.toMap(row), 'sn=?', [row.sn!]);
   }
 
-  static Future<int> deleteAsync(int sn) async {
-    return await DbUt.deleteAsync('dept', 'sn=?', [sn]);
+  static Future<int> deleteA(int sn) async {
+    return await DbUt.deleteA('dept', 'sn=?', [sn]);
   }
 
 }//class

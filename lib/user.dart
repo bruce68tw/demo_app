@@ -82,7 +82,7 @@ class _UserState extends State<User> {
     _isNew = (sn == null);
     _row = _isNew
       ? UserTab(status: 1)
-      : UserTab.fromMap(await UserTab.getMapAsync(sn!));
+      : UserTab.fromMap(await UserTab.getMapA(sn!));
     rowToForm();
 
     showGeneralDialog(
@@ -125,7 +125,7 @@ class _UserState extends State<User> {
 
   Future onDeleteAsync(int sn) async {
     ToolUt.ans(context, '是否確定刪除這筆資料?', () async {
-      await UserTab.deleteAsync(sn);
+      await UserTab.deleteA(sn);
       await showAsync('刪除完成。');
     });
   }
@@ -135,8 +135,8 @@ class _UserState extends State<User> {
 
     formToRow();
     var ok = _isNew
-      ? await UserTab.insertAsync(_row)
-      : await UserTab.updateAsync(_row);
+      ? await UserTab.insertA(_row)
+      : await UserTab.updateA(_row);
 
     //close edit dialog
     ToolUt.closeForm(context2);

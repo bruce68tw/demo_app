@@ -10,7 +10,7 @@ order by sn
   );
 
   Future<Map<String, dynamic>?> getPageAsync(DtDto dt) async {
-      return await CrudRead().getPageAsync(_read, dt);
+      return await CrudRead().getPageA(_read, dt);
   }
 
 }//class

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:base_lib/all.dart';
 
@@ -94,7 +96,7 @@ Create Table dept(
 
   static Future<List<IdStrDto>> getDeptsAsync() async {
     var sql = 'select sn as Id, name as Str from dept order by sn';
-    var rows = await DbUt.getIdStrsAsync(sql);
+    var rows = await DbUt.getIdStrsA(sql);
     ListUt.selectAddEmpty(rows);
     return rows;
   }

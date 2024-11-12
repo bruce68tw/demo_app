@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, prefer_interpolation_to_compose_strings
+
 import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +11,10 @@ class MyHttp extends StatefulWidget {
   const MyHttp({ Key? key }) : super(key: key);
 
   @override
-  _MyHttpState createState() => _MyHttpState();
+  MyHttpState createState() => MyHttpState();
 }
 
-class _MyHttpState extends State<MyHttp> {
+class MyHttpState extends State<MyHttp> {
   final Image _noImage = Image.asset('images/noImage.png');
 
   String _msgKeyStr = '';
@@ -32,7 +34,7 @@ class _MyHttpState extends State<MyHttp> {
   /// 1.key/string
   Future<void> onKeyStrAsync() async {
     var data = {'str1':'s1','str2':'s2'};
-    await HttpUt.getStrAsync(context, "MyHttp/KeyStr", false, data, (str){
+    await HttpUt.getStrA(context, "MyHttp/KeyStr", false, data, (str){
       setState(()=> _msgKeyStr = str);
     });
   }
@@ -40,7 +42,7 @@ class _MyHttpState extends State<MyHttp> {
   /// 2.json/json
   Future<void> onJsonJsonAsync() async {
     var data = {'Id':'id1','Str':'s1'};
-    await HttpUt.getJsonAsync(context, "MyHttp/JsonJson", true, data, (json){
+    await HttpUt.getJsonA(context, "MyHttp/JsonJson", true, data, (json){
       var msg = 'by server: Id=${json['Id']}, Str=${json['Str']}';
       setState(()=> _msgJsonJson = msg);
     });
@@ -49,7 +51,7 @@ class _MyHttpState extends State<MyHttp> {
   /// 3.get image
   Future<void> onGetImageAsync() async {
     var data = {'str':'s1'};
-    var image = await HttpUt.getImageAsync(context, "MyHttp/GetImage", data);
+    var image = await HttpUt.getImageA(context, "MyHttp/GetImage", data);
     if (image != null){
       setState(()=> _image = image);
     }
@@ -69,7 +71,7 @@ class _MyHttpState extends State<MyHttp> {
     encoder.close();
 
     var data = {'str':'s1'};
-    await HttpUt.uploadZipAsync(context, "MyHttp/UploadZip", File(zipFile), data, false, (str){
+    await HttpUt.uploadZipA(context, "MyHttp/UploadZip", File(zipFile), data, false, (str){
       setState(()=> _msgUploadZip = str);
     });
   }

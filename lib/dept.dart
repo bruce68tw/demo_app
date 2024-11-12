@@ -64,7 +64,7 @@ class _DeptState extends State<Dept> {
     _isNew = (sn == null);
     _row = _isNew
       ? DeptTab()
-      : DeptTab.fromMap(await DeptTab.getMapAsync(sn!));
+      : DeptTab.fromMap(await DeptTab.getMapA(sn!));
     rowToForm();
 
     showGeneralDialog(
@@ -96,7 +96,7 @@ class _DeptState extends State<Dept> {
 
   Future onDeleteAsync(int sn) async {
     ToolUt.ans(context, '是否確定刪除這筆資料?', () async {
-      await DeptTab.deleteAsync(sn);
+      await DeptTab.deleteA(sn);
       await showAsync('刪除完成。');
     });
   }
@@ -106,8 +106,8 @@ class _DeptState extends State<Dept> {
 
     formToRow();
     var ok = _isNew
-      ? await DeptTab.insertAsync(_row)
-      : await DeptTab.updateAsync(_row);
+      ? await DeptTab.insertA(_row)
+      : await DeptTab.updateA(_row);
 
     //close edit dialog
     ToolUt.closeForm(context2);

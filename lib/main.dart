@@ -1,10 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 //import 'package:flutter_riverpod/flutter_riverpod.dart';
 //import 'package:provider/provider.dart';
 import 'package:base_lib/all.dart';
 //import 'checks.dart';
 //import 'checks_yes.dart_old3';
+import 'child_check.dart';
 import 'derive.dart';
+import 'homepage.dart';
 import 'my_http.dart';
 import 'services/all.dart';
 import 'exchange_a.dart';
@@ -97,7 +101,7 @@ class MainFormState extends State<MainForm> {
   Future showGpsAsync() async {
     ToolUt.openWait(context);
     LogTimeUt.init();
-    var gps = await DeviceUt.getGpsAsync();
+    var gps = await DeviceUt.getGpsA();
     var miniSec = LogTimeUt.getMiniSec();
     ToolUt.closeWait(context);
     ToolUt.msg(context, '''
@@ -140,6 +144,12 @@ class MainFormState extends State<MainForm> {
               ToolUt.openForm(context, const MyHttp())),
             WG.textBtn('10.畫面繼承', ()=> 
               ToolUt.openForm(context, const Derive())),
+            WG.textBtn('11.child checkbox setState()', ()=> 
+              ToolUt.openForm(context, const ChildCheck())),
+            //WG.textBtn('12.車牌辨視', ()=> 
+            //  ToolUt.openForm(context, const CarCard())),
+            WG.textBtn('99.Test', ()=> 
+              ToolUt.openForm(context, const HomePage(idToken:'11', accessToken:'22'))),
     ])));
   }
 

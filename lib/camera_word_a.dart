@@ -122,7 +122,7 @@ class _CameraWordAState extends State<CameraWordA> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   WG.elevBtn('拍照', ()=> onTakePhotoAsync()),
-                  WG2.vGap(),
+                  WG.vGap(),
                   SizedBox(
                     width: 80,
                     child: iselect2(_flashType, _flashIcon[_flashType]!, _flashTypeList, (value){

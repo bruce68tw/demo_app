@@ -34,14 +34,4 @@ class WG2 {
     return WG.divider(15);
   }
 
-  //vertical gap
-  static Widget vGap([double value = 10]){
-    return SizedBox(height: value);
-  }
-
-  //horizontal gap
-  static Widget hGap([double value = 5]){
-    return SizedBox(width: value);
-  }
-
 } //class
